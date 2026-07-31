@@ -1,3 +1,5 @@
-letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+steps = ("first", "second", "third", "fourth", "fifth", "sixth")
 
-print(letters[-4:-1])
+reversed_steps = tuple(reversed(steps))
+
+print("Reversed tuple: ", reversed_steps)

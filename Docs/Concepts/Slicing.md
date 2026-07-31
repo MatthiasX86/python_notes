@@ -1,5 +1,35 @@
 # Python Slicing: A Comprehensive Guide (Under the Hood)
 
+<!--toc:start-->
+
+- [Python Slicing: A Comprehensive Guide (Under the Hood)](#python-slicing-a-comprehensive-guide-under-the-hood)
+  - [📋 Table of Contents](#📋-table-of-contents)
+  - [📐 Basic Syntax](#📐-basic-syntax)
+  - [🧠 How Slicing Works Internally](#🧠-how-slicing-works-internally)
+  - [🔢 The `slice` Object](#🔢-the-slice-object)
+  - [🧮 Negative Indices & Out-of-Range Handling](#🧮-negative-indices-out-of-range-handling)
+    - [Negative indices wrap around](#negative-indices-wrap-around)
+    - [Slicing is **forgiving**](#slicing-is-forgiving)
+  - [⚠️ Common Pitfalls](#️-common-pitfalls)
+    - [1. Empty vs None](#1-empty-vs-none)
+    - [2. Negative steps need _inclusive_ stop](#2-negative-steps-need-inclusive-stop)
+    - [3. Mutating while slicing](#3-mutating-while-slicing)
+  - [🧱 Slicing in Custom Classes](#🧱-slicing-in-custom-classes)
+    - [✅ Correct Implementation](#correct-implementation)
+    - [❌ Anti-pattern: Don’t manually unpack or use raw slice attributes](#anti-pattern-dont-manually-unpack-or-use-raw-slice-attributes)
+    - [✅ Use `slice.indices()` for all custom slicing](#use-sliceindices-for-all-custom-slicing)
+  - [⚡ Performance Notes](#performance-notes)
+  - [🔍 Under the Hood: How Python Handles Slicing](#🔍-under-the-hood-how-python-handles-slicing)
+    - [📦 Memory & Copy Behavior](#📦-memory-copy-behavior)
+    - [🏗️ CPython Internals (Lists)](#🏗️-cpython-internals-lists)
+    - [⏱️ Performance Characteristics](#️-performance-characteristics)
+    - [🧪 Probing Under the Hood](#🧪-probing-under-the-hood)
+    - [🧩 Why `x[:]` is Faster Than `list(x)`](#🧩-why-x-is-faster-than-listx)
+  - [🎯 Idiomatic Patterns & Best Practices](#🎯-idiomatic-patterns-best-practices)
+  - [🔗 Further Reading](#🔗-further-reading)
+
+<!--toc:end-->
+
 Slicing is one of Python’s most elegant and powerful features—but it can be subtle. This guide covers syntax, semantics, internals, and best practices.
 
 ---
