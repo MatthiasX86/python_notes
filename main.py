@@ -1,1 +1,3 @@
-print("this is a test")
+letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+
+print(letters[-4:-1])
