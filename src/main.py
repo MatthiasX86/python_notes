@@ -1,5 +1,5 @@
-from functools import wraps
 from collections.abc import Callable
+from functools import wraps
 
 
 def signature(func: Callable) -> Callable:
