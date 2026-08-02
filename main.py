@@ -1,36 +1,53 @@
-from typing import TypedDict, cast
-
-steps = ("first", "second", "third", "fourth", "fifth", "sixth")
+from dataclasses import dataclass
 
 
-class First(TypedDict):
-    first: int
+@dataclass
+class Employee:
+    name: str
+    age: int
+    __salary: int
+    position: str
+
+    @property
+    def salary(self):
+        return self.__salary
+
+    @salary.setter
+    def salary(self, new_salary: int):
+        self.__salary = new_salary
+
+    @salary.deleter
+    def salary(self):
+        raise AttributeError("cannot delete salary")
 
 
-class Second(TypedDict):
-    second: int
+matthew = Employee("matthew", 40, 0, "Software Engineer")
+
+print(matthew.salary)
 
 
-class Third(First, Second):
-    pass
+class Other:
+    __x: int = 2
+
+    @classmethod
+    def change_x(cls, new_x):
+        if new_x > 3000:
+            raise ValueError("nope")
+        cls.__x = new_x
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __call__(self) -> None:
+        """
+        We have a callable here for a reason
+        """
 
 
-first_obj: First = {"first": 1}
+some_var = Other.__dict__["_x"]
 
-second_obj: Second = {"second": 2}
+peter = Other(name="peter")
 
-other: Third = {**first_obj, **second_obj}
+print(peter.__x)
 
-print(first_obj)
-
-print(first_obj)
-
-prices = {"k": 30, "m": 20, "c": 40}
-
-print(prices)
-
-print(prices.items())
-
-sorted_prices = dict(sorted(prices.items(), key=lambda x: x[1]))
-
-print(sorted_prices)
+print(callable(peter))
