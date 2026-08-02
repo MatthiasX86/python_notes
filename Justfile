@@ -1,4 +1,4 @@
 # Run all test & coverage
 main:
-  uv run main.py
+  uv run src/main.py
 
