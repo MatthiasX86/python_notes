@@ -1,3 +1,6 @@
 # TODO
 
-- Example for @staticmethod and @classmethod
+- Example for:
+  - @staticmethod
+  - @classmethod
+  - @dataclass
