@@ -1,6 +1,6 @@
 ## Me
 
-can you give me a list of important pythong "under-the-hood" concepts that are important to know/learn
+can you give me a list of important python "under-the-hood" concepts that are important to know/learn
 
 ## CodeCompanion (OpenAI Compatible)
 

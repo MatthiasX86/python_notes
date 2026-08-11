@@ -1,3 +1,5 @@
+import string
+import itertools
 import sys
 from collections.abc import Callable
 from functools import wraps
@@ -22,5 +24,4 @@ def greeting_message(x: Name):
     print(f"welcome to the company! {x}")
 
 
-while (someStr := input("please enter a value")) != "exit":
-    print("try again")
+print(string.ascii_letters)
