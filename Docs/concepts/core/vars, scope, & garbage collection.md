@@ -52,23 +52,50 @@ print(z)             # ✅ [1, 2, 3]     (z is independent)
 
 ### Assignment vs. Binding
 
-| Operation | What Happens                                           |
-| --------- | ------------------------------------------------------ |
-| `x = obj` | **Binds** name `x` to object `obj`                     |
-| `x = y`   | Re-binds `x` to _whatever_ `y` references              |
-| `x += y`  | Modifies object in-place (if mutable), _not_ rebinding |
+| Operation        | What Happens                                                                                                           | Type                |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `x = obj`        | **Binds** name `x` to object `obj` (assignment)                                                                        | Assignment          |
+| `x = y`          | Re-binds `x` to _whatever_ `y` references (assignment)                                                                 | Assignment          |
+| `x += y`         | **Mutates** object in-place (if mutable), _not_ reassignment<br>→ But for immutables: `x = x + y` (re-**assignment**!) | Mixed / Conditional |
+| `lst[0] = 5`     | Modifies _contents_ of list object; name `lst` unchanged                                                               | Mutation            |
+| `x.append(y)`    | Mutates list in-place; no new object created                                                                           | Mutation            |
+| `x[0].append(y)` | Mutates _nested_ mutable object (shallow copy still shares inner refs)                                                 | Mutation            |
+
+#### Critical distinction
+
+| Scenario                             | `id(x)` before | After operation                             | Type                                                 |
+| ------------------------------------ | -------------- | ------------------------------------------- | ---------------------------------------------------- |
+| `x = [1]`; then `x += [2]`           | ✅ Same        | ✅ Same                                     | Mutation (in-place)                                  |
+| `x = 1`; then `x += 2`               | ❌ Changed     | ❌ Changed                                  | Assignment (`int` is immutable → creates new object) |
+| `x = [1]`; then `x.append(2)`        | ✅ Same        | ✅ Same                                     | Mutation                                             |
+| `x = [1]`; then `y = x; y.append(2)` | —              | `x` and `y` share same ID → both see change | Mutation (shared reference)                          |
+
+#### Practical examples
 
 ```python
+# ✅ In-place mutation: no assignment, same object ID
 a = [1, 2]
-b = a
+id_a_before = id(a)
+a += [3]        # extend (in-place for list)
+print(id_a_before == id(a))   # ✅ True
 
-# a += [3] modifies the list in-place
-a += [3]
-print(a, b)  # ✅ [1, 2, 3] [1, 2, 3]
+# ❌ Assignment for immutable: new object created
+b = 10
+id_b_before = id(b)
+b += 5          #相当于 b = b + 5 (creates new int)
+print(id_b_before == id(b))   # ❌ False
 
-# a = a + [4] creates NEW list → rebinds 'a'
-a = a + [4]
-print(a, b)  # ✅ [1, 2, 3, 4] [1, 2, 3]
+# ⚠️ += behaves differently per type:
+s = "hi"
+id_s_before = id(s)
+s += "!"        # string is immutable → re-assignment
+print(id_s_before == id(s))   # ❌ False
+
+# But for dict-like mappings with in-place ops:
+d = {"a": 1}
+id_d_before = id(d)
+d.update({"b": 2})  # in-place → no reassignment
+print(id_d_before == id(d))   # ✅ True
 ```
 
 ---
